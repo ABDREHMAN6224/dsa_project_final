@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { balanceIL, balanceIR, balancePartciularNode, balanceTree, deleteVal, insertValue, insertValue2, leftRotate, rightRotate } from '../utils/trees/BinaryTree'
 import { sleep } from '../utils/sorting'
 import { getSuccessiveNodes, getXYDifference } from '../utils/utils'
 
-const CreateNode = ({node,setTree,setChange,change,setRotating,setAnimating,autoBalance,ctx,swaps}) => {
+const CreateNode = ({node,setTree,setChange,change,setRotating,setAnimating,autoBalance,ctx,swaps,handleSubmit:handle}) => {
     const [display,setDisplay]=useState(true)
     const [val,setVal]=useState('')
     const [val1,setVal1]=useState('')
@@ -33,8 +33,6 @@ const CreateNode = ({node,setTree,setChange,change,setRotating,setAnimating,auto
         const {p,c}=currMove;
         let p_node=findPC(node,p);
         let c_node=findPC(node,c); 
-        console.log(p_node); 
-        console.log(c_node); 
         setAnimating({action:"rotating",currNode:p_node})      
         const elem1=document.getElementById(p_node.id);
         const elem2=document.getElementById(c_node.id); 
@@ -122,10 +120,10 @@ const CreateNode = ({node,setTree,setChange,change,setRotating,setAnimating,auto
     const animateDeleteion=(swps,temp)=>{
         setAnimating({action:"",currNode:{}})
         if(swps.length<1){
-            let swaps=[];
-        balanceTree(temp,setAnimating,swaps);
-        console.log(swaps);
-        // animate(swaps);
+        let tree_1=JSON.parse(JSON.stringify(node));
+        balanceTree(tree_1,setAnimating,swaps);
+        animate(swaps);
+        // console.log(swaps);
             return;
         }
         const move=swps.shift();
@@ -180,15 +178,18 @@ const CreateNode = ({node,setTree,setChange,change,setRotating,setAnimating,auto
             },200)
         },timing.duration)
     }
-
+    useEffect(()=>{
+        if(node!==null){
+            handle();
+        }
+    },[node])
     const handleSubmit=(e)=>{
-            e.preventDefault()
+            e.preventDefault();
             if(val!==null){
                 const data=async ()=>{
                     let d=await insertValue(node,Number(val),setAnimating)
                     setTree({root:d})
                     setAnimating({action:"",currNode:{}})
-                    
                     if(autoBalance){
                         let tree=JSON.parse(JSON.stringify(node));
                         balanceTree(tree,setAnimating,swaps);
@@ -208,8 +209,8 @@ const CreateNode = ({node,setTree,setChange,change,setRotating,setAnimating,auto
       e.preventDefault();
         let tree=JSON.parse(JSON.stringify(node));
         tree=deleteVal(tree,Number(val1),swaps);
-        animateDeleteion(swaps,tree)
-        setVal1("");    
+        animateDeleteion(swaps,tree);
+        setVal1("");   
     }
     return (<Wrapper>
     {display && <form action="" className='form node-input'>
@@ -226,13 +227,13 @@ const CreateNode = ({node,setTree,setChange,change,setRotating,setAnimating,auto
 {display && 
  <form action="" className='form node-input'>
         <div className="form-row">
-        <label htmlFor="" className='form-label'>Value</label>
-        <input type="number" className='form-input' value={val1} placeholder='Enter Other Values' onChange={(e)=>{
+        <label htmlFor="" className='form-label'>Delete Node</label>
+        <input type="number" className='form-input' value={val1} placeholder='Enter Value to Delete' onChange={(e)=>{
             const val=e.target.value
             setVal1(val)
         }} />
         </div>
-        <button className='btn btn-danger' type="submit" onClick={handleDelete}>DeleteNode</button>
+        <button className='btn btn-danger' type="submit" onClick={handleDelete}>Delete</button>
     </form> }
   </Wrapper>
   )

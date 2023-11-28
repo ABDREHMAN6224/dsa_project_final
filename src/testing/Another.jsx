@@ -3,9 +3,10 @@ import styled from 'styled-components'
 import Canvas from './Canvas'
 import { useGlobalContext } from '../context/context'
 import { getHeight, getWidth } from '../utils/utils'
+import Information from '../components/Information'
 
 const Another = () => {
-    const {array,size,moves,time}=useGlobalContext();
+    const {array,size,moves,time,setNoOfComps,setNoOfSwaps}=useGlobalContext();
     const [frames,setFrames]=useState(30);
     const [margin,setMargin]=useState(20); 
     let sorted=[]; 
@@ -113,11 +114,13 @@ const Another = () => {
                 bars[i].moveTo(bars[j],1);
                 bars[j].moveTo(bars[i],-1);
                 [bars[i],bars[j]]=[bars[j],bars[i]];
+                // setNoOfSwaps((prev)=>prev+1);
             }
             else if(currMove.action==="compare"){
                 console.log(i,j);
                 bars[i].jump();
                 bars[j].jump();
+                // setNoOfComps((prev)=>prev+1);
             }
             else if(currMove.action==="pivot"){
                 pivot=bars[i];
@@ -150,6 +153,7 @@ const Another = () => {
   return (
     <Wrapper>
         <Canvas draw={draw} animate={animate}/>
+        <Information show={false}/>
     </Wrapper>
   )
 }
@@ -158,6 +162,5 @@ export default Another
 
 const Wrapper=styled.div`
     display: grid;
-    place-items: center;
-    /* grid-template-columns: 1fr 200px; */
+    grid-template-columns: 1fr auto;
 `

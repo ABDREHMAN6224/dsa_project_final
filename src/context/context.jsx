@@ -16,16 +16,23 @@ const AppProvider=({children})=>{
     const [sorted,setSorted]=useState([])
     const [jmp,setJmp]=useState([]);
     const [using3d,setusing3d]=useState(false);
+    const [currentSort,setCurrentSort]=useState("bubble");
+    let [noOfSwaps,setNoOfSwaps]=useState(0);
+    let [noOfComps,setNoOfComps]=useState(0);
+    
 
 
 
     const mergeSortAnimate=()=>{
+        setNoOfComps(0);
+        setNoOfSwaps(0);
         setMove({})
         setJmp([])
         setportion(null);
         setPivot(null); 
         const tempArray=[...array]
         const swaps= mergeSort(tempArray,0,array.length-1);
+        setCurrentSort("merge");
         const temp=swaps.filter((s)=>s.action=="swapped" && s.value)
         if(!using3d){
             animate(swaps);
@@ -34,12 +41,14 @@ const AppProvider=({children})=>{
         
     }
     const heapSortAnimate=()=>{
+        setNoOfComps(0);
+        setNoOfSwaps(0);
         setMove({})
         setJmp([])
         setPivot(null);
         setportion(null);
         const tempArray=[...array]
-
+        setCurrentSort("heap");
         const swaps= heapSort(tempArray);
         if(!using3d){
 
@@ -48,10 +57,13 @@ const AppProvider=({children})=>{
         return swaps
     }
     const bubbleSortAnimate=()=>{
+        setNoOfComps(0);
+        setNoOfSwaps(0);
         setMove({})
         setJmp([])
         setPivot(null);
         setportion(null);
+        setCurrentSort("bubble")
         const tempArray=[...array]
         if(!using3d){
 
@@ -62,6 +74,8 @@ const AppProvider=({children})=>{
         return swaps
     }
     const selectionSortAnimate=()=>{
+        setNoOfComps(0);
+        setNoOfSwaps(0);
         setMove({})
         setJmp([])
         setPivot(null);
@@ -71,13 +85,17 @@ const AppProvider=({children})=>{
 
             animate(selectionSort(tempArray));
         }
+        setCurrentSort("selection");
         return selectionSort(tempArray);
     }
     const quickSortAnimate=()=>{
+        setNoOfComps(0);
+        setNoOfSwaps(0);
         setMove({})
         setJmp([])
         setportion(null);
         setPivot(null);
+        setCurrentSort("quick");
         const tempArray=[...array]
         const swaps= quickSort(tempArray,0,array.length-1);
         if(!using3d){
@@ -88,10 +106,13 @@ const AppProvider=({children})=>{
         
     }
     const insertionSortAnimate=()=>{
+        setNoOfComps(0);
+        setNoOfSwaps(0);
         setMove({})
         setJmp([])
         setportion(null);
         setPivot(null);
+        setCurrentSort("insertion");
         const tempArray=[...array]
         const swaps= insertionSort(tempArray);
         if(!using3d){
@@ -106,7 +127,6 @@ const AppProvider=({children})=>{
             return;
         }
         const currMove=swaps.shift();
-        // setSwaps(swaps.slice(1));
         const [i, j] = currMove.indices;
         const large=i>=j?i:j;
         const small=i<j?i:j;
@@ -120,10 +140,12 @@ const AppProvider=({children})=>{
             array[j]=k
         }
         else if(currMove.action=="compare"){
-            setBack("yellow")
+            setNoOfComps((prev)=>prev+1);
+            setBack(" rgb(146, 178, 78)");
         }
         else if (currMove.action === "swapped") {
-            setBack("var(--primary-900)");
+            setBack("var(--primary-500)");
+            setNoOfSwaps((swaps)=>swaps+1);
             [array[i], array[j]] = [array[j], array[i]];
             setArray(array)
             
@@ -145,7 +167,7 @@ const AppProvider=({children})=>{
     useEffect(()=>{
         setArray(generateArray(size))
     },[size])
-    return <AppContext.Provider value={{using3d,setusing3d,setMoves,setArray,jmp,sorted,moves,setSorted,insertionSortAnimate,array,setSize,setTime,time,size,pivot,heapSortAnimate,shuffle,animate,portion,move,bubbleSortAnimate,quickSortAnimate,setBack,back,selectionSortAnimate,mergeSortAnimate,setPivot,setportion}}>
+    return <AppContext.Provider value={{sorted,noOfComps,setNoOfComps,setNoOfSwaps,noOfSwaps,using3d,currentSort,setusing3d,setMoves,setArray,jmp,sorted,moves,setSorted,insertionSortAnimate,array,setSize,setTime,time,size,pivot,heapSortAnimate,shuffle,animate,portion,move,bubbleSortAnimate,quickSortAnimate,setBack,back,selectionSortAnimate,mergeSortAnimate,setPivot,setportion}}>
         {children}
     </AppContext.Provider>
 }

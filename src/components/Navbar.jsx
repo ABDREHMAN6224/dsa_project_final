@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useGlobalContext } from '../context/context'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
     const {using3d,setusing3d,size,setSize,setMoves,setTime,time,setPivot,setSorted,setBack,setportion,insertionSortAnimate,heapSortAnimate,shuffle,bubbleSortAnimate,mergeSortAnimate,selectionSortAnimate,quickSortAnimate}=useGlobalContext()
@@ -51,29 +52,35 @@ const Navbar = () => {
       if(using3d){
         setMoves(moves);
       }
-      // setMoves(moves);
     }
   return (
     <Wrapper>
-        <input type="range" name="size" id="" min={5} max={120} step={5} value={size} onChange={(e)=>{
-            setSize(Number(e.target.value))}
-            }/>
-        <input type="range" name="size" id="" min={5} max={100} step={5} value={time} onChange={(e)=>{
-            setTime(Number(e.target.value))}
-            }/>
+      <div className="controls">
+        <Link className="btn btn-danger" to="/">Home</Link>
+      <div className="row">
+        <h6>Size Of Arr</h6>
+        <input type="range" name="size" id="" min={5} max={150} step={5} value={size} onChange={(e)=>{
+          setSize(Number(e.target.value))}
+        }/>
+        </div>
+        <div className="row">
+        <h6>Speed (max:min)</h6>
+        <input type="range" name="size" id="" min={5} max={500} step={5} value={time} onChange={(e)=>{
+          setTime(Number(e.target.value))}
+        }/>
+        </div>
         <button type='button' onClick={handleShuffle} className='btn btn-primary'>Shuffle Array</button>
+        </div>
+            <div className="sorts">
+
         <button type='button' onClick={handleBubble} className='btn btn-hipster'>BubbleSort</button>
-        {/* <button type='button' onClick={bubbleSortAnimate} className='btn btn-hipster'>BubbleSort</button> */}
-        {/* <button type='button' onClick={selectionSortAnimate} className='btn btn-hipster'>selectionSort</button> */}
         <button type='button' onClick={handleSelection} className='btn btn-hipster'>selectionSort</button>
-        {/* <button type='button' onClick={mergeSortAnimate} className='btn btn-hipster'>mergeSort</button> */}
         <button type='button' onClick={handleMerge} className='btn btn-hipster'>mergeSort</button>
-        {/* <button type='button' onClick={quickSortAnimate} className='btn btn-hipster'>quickSort</button> */}
         <button type='button' onClick={handleQuick} className='btn btn-hipster'>quickSort</button>
         <button type='button' onClick={handleInsertion} className='btn btn-hipster'>insertionSort</button>
-        {/* <button type='button' onClick={insertionSortAnimate} className='btn btn-hipster'>insertionSort</button> */}
         <button type='button' onClick={handleHeap} className='btn btn-hipster'>heapSort</button>
-        <button type='button' onClick={()=>setusing3d(!using3d)} className='btn btn-hipster'>{using3d?"toggle to 2d":"toggleTo3d"}</button>
+            </div>
+        <button type='button' onClick={()=>setusing3d(!using3d)} className='btn btn-primary'>{using3d?"toggle to 2d":"toggleTo3d"}</button>
     </Wrapper>
   )
 }
@@ -81,5 +88,34 @@ const Navbar = () => {
 export default Navbar
 
 const Wrapper=styled.div`
+  background: var(--grey-300);
+  padding: 0px 1rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .controls{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+  .row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    h6{
+      margin: 0;
+      font-size: 14px;
+      padding: 0;
+    }
+  }
+  .sorts{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
     
 `

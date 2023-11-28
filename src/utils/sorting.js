@@ -11,7 +11,6 @@ export const bubbleSort = (array) => {
             if (array[j] > array[j + 1]) {
                 swapped = true;
                 [array[j], array[j + 1]] = [array[j + 1], array[j]];
-                // swaps.push({ action: "move", indices: [j, j + 1] });
                 swaps.push({ action: "swapped", indices: [j, j + 1] });
             }
         }
@@ -38,7 +37,6 @@ export const selectionSort = (array) => {
                 min = j;
             }
         }
-        // swaps.push({ action: "move", indices: [i, min] });
         swaps.push({
             action: "swapped",
             indices: [i, min]
@@ -75,12 +73,10 @@ const mergeArrays = (array, start, mid, end, swaps) => {
         swaps.push({ action: "compare", indices: [s, m] });
         if (array[s] <= array[m]) {
             temp[k] = array[s];
-            // swaps.push({ action: "swapped", indices: [start + k, s] });
             s++;
         }
         else {
             temp[k] = array[m];
-            // swaps.push({ action: "swapped", indices: [start + k, m] });
             m++;
         }
         k++;
@@ -88,19 +84,16 @@ const mergeArrays = (array, start, mid, end, swaps) => {
 
     while (s < mid) {
         temp[k] = array[s];
-        // swaps.push({ action: "swapped", indices: [start + k, s] });
         s++;
         k++;
     }
 
     while (m <= end) {
         temp[k] = array[m];
-        // swaps.push({ action: "swapped", indices: [start + k, m] });
         m++;
         k++;
     }
     for (let l = 0; l < temp.length; l++) {
-        // swaps.push({ action: "put", indices: [start + l, array.indexOf(temp[l])], value: array[start + l] });
 
         array[start + l] = temp[l];
         const i1 = array.indexOf(temp[l]);
@@ -134,7 +127,6 @@ export const quickSort = (array, start, end) => {
         }
         if (s < e) {
             [array[s], array[e]] = [array[e], array[s]];
-            // swaps.push({ action: "move", indices: [s, e] })
             swaps.push({ action: "swapped", indices: [s, e] })
 
         }
@@ -149,6 +141,7 @@ export const insertionSort = (array) => {
     const swaps = []
     for (let i = 0; i < array.length - 1; i++) {
         for (let j = i + 1; j > 0; j--) {
+            swaps.push({ action: "portion", indices: [j, i + 1] });
             swaps.push({ action: "compare", indices: [j - 1, j] })
             if (array[j] < array[j - 1]) {
                 [array[j - 1], array[j]] = [array[j], array[j - 1]]

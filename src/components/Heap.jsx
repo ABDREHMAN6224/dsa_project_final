@@ -22,10 +22,10 @@ const Heap = () => {
 export default Heap
 const Wrapper=styled.div`
   display: grid;
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: 350px 1fr;
   height: 100vh;
   max-height: 100vh;
-  background: var(--grey-800);
+  background: var(--grey-900);
   .binary-tree {
   padding-top: 2rem;
   display: grid;
@@ -104,6 +104,11 @@ const Wrapper=styled.div`
     top: -25px;
     color: var(--red-light);
     font-size: 12px;
+  }
+  .form{
+    padding: 1rem ;
+    min-width: 100%;
+    box-shadow: none;
   }
   
 `

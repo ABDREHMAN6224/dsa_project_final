@@ -95,7 +95,7 @@ const HeapProvider=({children})=>{
          <span id={root.id}  style={{backgroundColor:"var(--red-dark)",color:"white"}}>{root.value}
           <div className='before' ></div>
           </span>:
-         <span id={root.id}  style={{backgroundColor:"var(--primary-600)",color:"white"}}>{root.value}
+         <span id={root.id}  style={{backgroundColor:"var(--grey-200)"}}>{root.value}
             <div className='before'></div>
           </span>
 

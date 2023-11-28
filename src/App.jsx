@@ -8,29 +8,47 @@ import Another from './testing/Another';
 import Tree from './testing/trees/Tree';
 import Heap from './components/Heap';
 import { useGlobalContext } from './context/context';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Home from './components/Home';
 
 const App = () => {
   const {using3d}=useGlobalContext();
+  const router=createBrowserRouter([
+    
+    {
+      path:"/",
+      element:<Home/>
+    },
+        {
+          path:"/trees",
+          element:<TreeVisualizer/>
+        },
+        {
+          path:"/heap",
+          element:<Heap/>
+        },
+        {
+          path:"/sorting",
+          element:<>
+          <Navbar/>
+              {
+              using3d?
+                <Another/>
+                :
+                <Visualization/>
+              }
+          </>
+        }
+      
+    
+  ]);
+
   return (
     <>
-    {/* <Heap/> */}
-    {/* <Tree/> */}
-      {/* <TreeVisualizer/> */}
-      {/* <SegmentTree/> */}
-    <Navbar/>
-    <div id="container">
-   {
-   using3d?
-    <Another/>
-    :
-    <Visualization/>
-   }
-  </div>
-    {/* <div className="options"></div> */}
-  {/* <Navbar/> */}
-    {/* <Check/> */}
+            <RouterProvider router={router}/>
     </>
   )
 }
+
 
 export default App

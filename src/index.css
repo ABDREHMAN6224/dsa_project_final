@@ -196,6 +196,7 @@ ul {
 .btn-hero {
     font-size: 1.25rem;
     padding: 0.5rem 1.25rem;
+    /* background: rgb(174, 255, 0); */
 }
 
 .btn-danger {

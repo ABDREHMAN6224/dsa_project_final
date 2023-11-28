@@ -28,10 +28,10 @@ export const balanceTree = (node, setAnimating, swaps) => {
     if (node === null) {
         return null
     }
-    node.left = balanceTree(node.left, setAnimating, swaps)
-    node.right = balanceTree(node.right, setAnimating, swaps)
-    node.height = Math.max(node.left ? node.left.height : -1, node.right ? node.right.height : -1) + 1
-    return rotate(node, setAnimating, swaps)
+    node.left = balanceTree(node.left, setAnimating, swaps);
+    node.right = balanceTree(node.right, setAnimating, swaps);
+    node.height = Math.max(node.left ? node.left.height : -1, node.right ? node.right.height : -1) + 1;
+    return rotate(node, setAnimating, swaps);
 }
 // export const balanceTree = async (node, setAnimating, swaps) => {
 //     if (node === null) {
@@ -43,14 +43,13 @@ export const balanceTree = (node, setAnimating, swaps) => {
 //     return await rotate(node, setAnimating, swaps)
 // }
 const rotate = (node, setAnimating, swaps) => {
-
     setAnimating({ action: "compare", currNode: node })
     if (((node.left ? node.left.height : -1) - (node.right ? node.right.height : -1)) > 1) {
-        setAnimating({ action: "rotating", currNode: node })
-        if (((node.left.left ? node.left.left.height : -1) - (node.left.right ? node.left.right.height : -1)) > 0) {
-
-            swaps.push({ action: "right_rotate", p: node, c: node.left })
-            const n = rightRotate(node)
+        setAnimating({ action: "rotating", currNode: node });
+        console.log(node);
+        if (((node.left.left ? node.left.left.height : -1) - (node.left.right ? node.left.right.height : -1)) >= 0) {
+            swaps.push({ action: "right_rotate", p: node, c: node.left });
+            const n = rightRotate(node);
             return n
         }
         if (((node.left.left ? node.left.left.height : -1) - (node.left.right ? node.left.right.height : -1)) < 0) {
@@ -68,7 +67,7 @@ const rotate = (node, setAnimating, swaps) => {
     if (((node.left ? node.left.height : -1) - (node.right ? node.right.height : -1)) < -1) {
         setAnimating({ action: "rotating", currNode: node })
 
-        if (((node.right.right ? node.right.right.height : -1) - (node.right.left ? node.right.left.height : -1)) > 0) {
+        if (((node.right.right ? node.right.right.height : -1) - (node.right.left ? node.right.left.height : -1)) >= 0) {
             swaps.push({ action: "left_rotate", p: node, c: node.right })
             const n = leftRotate(node)
             return n;
@@ -89,7 +88,7 @@ const rotate = (node, setAnimating, swaps) => {
 const rotate2 = (node) => {
 
     if (((node.left ? node.left.height : -1) - (node.right ? node.right.height : -1)) > 1) {
-        if (((node.left.left ? node.left.left.height : -1) - (node.left.right ? node.left.right.height : -1)) > 0) {
+        if (((node.left.left ? node.left.left.height : -1) - (node.left.right ? node.left.right.height : -1)) >= 0) {
 
             const n = rightRotate(node)
             return n
@@ -106,7 +105,7 @@ const rotate2 = (node) => {
     }
     if (((node.left ? node.left.height : -1) - (node.right ? node.right.height : -1)) < -1) {
 
-        if (((node.right.right ? node.right.right.height : -1) - (node.right.left ? node.right.left.height : -1)) > 0) {
+        if (((node.right.right ? node.right.right.height : -1) - (node.right.left ? node.right.left.height : -1)) >= 0) {
             const n = leftRotate(node)
             return n;
         }

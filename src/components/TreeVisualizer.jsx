@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { balanceTree, deleteVal, searchValue } from '../utils/trees/BinaryTree';
 import TreeNavbar from './TreeNavbar';
 import { v4 as uuid } from 'uuid';
+import { useTreeContext } from '../context/TreeContext';
+import SegmentTree from './SegmentTree';
 
 const TreeVisualizer = () => {
   const [tree,setTree] =useState({root:null});
@@ -19,7 +21,7 @@ const TreeVisualizer = () => {
 
   const [animating,setAnimating]=useState({action:"",currNode:""})
   const [autoBalance,setAutoBalance]=useState(true)
-  
+  const {selected}=useTreeContext();
   
   const display= (root)=>{
     if(root!==null){
@@ -55,10 +57,6 @@ const TreeVisualizer = () => {
     
   }
   const handleSubmit=(e)=>{
-    e.preventDefault();
-
-    // tree.root=insertInBinaryTree(Number(value),350,100,context)
-    tree.root={value:Number(value),left:null,right:null,height:0,id:"n_"+uuid()}
     setRender(true)
   }
   
@@ -88,22 +86,14 @@ const TreeVisualizer = () => {
   
       }
     },[animating])
-    
+  
   return (
     <main>
-      <TreeNavbar/>
+      <TreeNavbar setAutoBalance={setAutoBalance} setTree={setTree}/>
+      {selected=="Segment Tree"?<SegmentTree/> :
     <Wrapper>
       <div className="nodes">
-        {/* //only for binary search trees and avl trees */}
-         <form action="" className='form' onSubmit={handleSubmit}>
-          <div className="form-row">
-        <label htmlFor="" className='form-label'>Root</label>
-          <input type="number" value={value} className='form-input' placeholder='Enter Root Node' onChange={(e)=>{ const val=e.target.value
-            setValue(val)}} />
-            </div>
-          <button type="submit" className='btn btn-danger' >Enter</button>
-        </form>
-        {render && <CreateNode swaps={swaps} node={tree.root} ctx={context} change={change} setChange={setChange} setTree={setTree} setRotating={setRotating}  setAnimating={setAnimating} autoBalance={autoBalance}/>}
+        <CreateNode swaps={swaps} node={tree.root} ctx={context} change={change} setChange={setChange} setTree={setTree} setRotating={setRotating}  setAnimating={setAnimating} autoBalance={autoBalance} handleSubmit={handleSubmit}/>
             {render && 
         <form className='form' >
           <div className="form-row">
@@ -114,28 +104,9 @@ const TreeVisualizer = () => {
           <button type="submit" className='btn btn-danger' onClick={handleSearch} >Enter</button>
         </form>
         }
-        {/* //only for binary search trees */}
-
-        {/* {autoBalance ? <button onClick={()=>setAutoBalance(!autoBalance)} className="btn  btn-hipster">Set Manual Balance</button>:
-        <button onClick={()=>setAutoBalance(!autoBalance)} className="btn  btn-hipster">Set Auto Balance</button>} */}
-        {/* {render && !autoBalance && <button onClick={handleBalanace} className="btn  btn-primary">balance</button>} */}
-        {/* {tree.root && 
-        <form action="" className='form node-input'>
-        <div className="form-row">
-        <label htmlFor="" className='form-label'>Value</label>
-        <input type="number" className='form-input' value={val} placeholder='Enter Other Values' onChange={(e)=>{
-            const val=e.target.value
-            setVal(val)
-        }} />
-        </div>
-        <button className='btn btn-danger' type="submit" onClick={handleDelete}>DeleteNode</button>
-    </form> 
-        // <button onClick={()=>setTree({root:null})} className="btn  btn-danger">Delete Tree</button>
-        } */}
         
       </div>
       <div className="display-container">
-        {/* <canvas id='tree' width={"700"} height={"700"} style={{background:"yellow"}}></canvas> */}
       {tree.root &&
         <div className="binary-tree preorde inorde postorde">
           {display(tree.root)}
@@ -143,6 +114,7 @@ const TreeVisualizer = () => {
       }
       </div>
    </Wrapper>
+   }
   </main>
   )
 }
@@ -152,10 +124,11 @@ export default TreeVisualizer
 const Wrapper=styled.div`
 
   background-color: var(--grey-900);
-  /* padding: 3rem; */
   display: grid;
   grid-template-columns:250px 1fr ;
-  height: 100vh;
+  max-height: 92vh;
+  min-height: 92vh;
+  overflow: hidden;
   .no-match{
     background-color: red!important;
     scale: 1.4;
@@ -188,8 +161,15 @@ const Wrapper=styled.div`
     max-width: 200px;
   }
   .nodes{
-    background: var(--grey-700);
-    padding: 3rem;
+    overflow: hidden;
+    background: var(--grey-100);
+    /* background: white; */
+    form{
+      color: black;
+      background: white;
+      background: var(--grey-100);
+    }
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -199,10 +179,7 @@ const Wrapper=styled.div`
   }
   .display-container{
     padding: 3rem;
-    /* display: flex; */
     margin:0 auto;
-    /* align-items: center; */
-    /* justify-content: center; */
     position: relative;
     min-width: 100%;
     min-height: 90vh;
@@ -244,7 +221,6 @@ const Wrapper=styled.div`
     transition: all 0.15s;
     .before{
       content: '';
-      /* animation: width 0.5s linear forwards; */
       margin: 0;
       padding: 0;
       position: absolute;
@@ -287,7 +263,6 @@ const Wrapper=styled.div`
     background: linear-gradient(to bottom left, transparent 45%,red 51%,transparent 56%);
   }
    .binary-tree >div >span .before{
-    /* content: none; */
     display: none;
   }
  

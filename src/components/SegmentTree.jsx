@@ -146,14 +146,18 @@ const SegmentTree = () => {
 
 export default SegmentTree
 const Wrapper=styled.div`
-    padding: 3rem;
+    /* padding: 3rem; */
     display: grid;
-    grid-template-columns: 500px 1fr;
+    grid-template-columns: 400px 1fr;
+    max-height: 92vh;
+    min-height: 92vh;
     .options{
-        background: var(--white);
-    }
-    .form{
+        background: var(--grey-100);
+      }
+      .form{
+      background: var(--grey-100);
         margin: 0;
+        max-width: 370px;
     }
     .display-container{
     position: relative;
