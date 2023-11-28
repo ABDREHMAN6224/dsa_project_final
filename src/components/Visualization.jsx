@@ -20,9 +20,9 @@ const Visualization = () => {
     {
       array.map((e,i)=>{
         if(portion && (i>=portion[0] && i<=portion[1])){
-          return <div key={uuid()} style={{height:"100%",width:size<30?`${450/size}px`:size<70?`${820/size}px`:`${850/size}px`,background:"var(--grey-300)"}}></div>
+          return <div key={uuid()} style={{height:"90%",width:size<30?`${450/size}px`:size<70?`${820/size}px`:`${850/size}px`,background:"var(--grey-300)"}}></div>
         }else{
-          return <div key={uuid()} style={{height:"100%",width:size<30?`${450/size}px`:size<70?`${820/size}px`:`${850/size}px`,background:"transparent"}}></div>
+          return <div key={uuid()} style={{height:"90%",width:size<30?`${450/size}px`:size<70?`${820/size}px`:`${850/size}px`,background:"transparent"}}></div>
         }
 
       })
@@ -67,11 +67,10 @@ const Wrapper=styled.div`
   display: grid;
   grid-template-columns: 1fr 400px;
   overflow: hidden;
-  min-height: 600px;
   background-color: var(--grey-200);
 
-    max-height: 90vh;
-    min-height: 93vh;
+    /* max-height: 90vh; */
+    min-height: 90vh;
     padding: 1rem;
     padding-top: 0;
     padding-right: 0;
