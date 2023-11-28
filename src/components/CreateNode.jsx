@@ -120,10 +120,11 @@ const CreateNode = ({node,setTree,setChange,change,setRotating,setAnimating,auto
     const animateDeleteion=(swps,temp)=>{
         setAnimating({action:"",currNode:{}})
         if(swps.length<1){
-        let tree_1=JSON.parse(JSON.stringify(node));
-        balanceTree(tree_1,setAnimating,swaps);
-        animate(swaps);
-        // console.log(swaps);
+            if(autoBalance){
+                let tree_1=JSON.parse(JSON.stringify(node));
+                balanceTree(tree_1,setAnimating,swaps);
+                animate(swaps);
+            }
             return;
         }
         const move=swps.shift();
