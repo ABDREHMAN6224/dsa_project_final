@@ -11,7 +11,7 @@ const Information = ({show}) => {
 
     <Wrapper >
 
-      <h3>{currentSort} Sort Analysis</h3>
+      <h3>{currentSort} Sort </h3>
       <div className="info">
 
             {Object.keys(sortingAnalysis[currentSort]).map(m=>{
