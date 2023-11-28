@@ -70,7 +70,7 @@ background: var(--grey-200);
 padding: 0.8rem;
 display: flex;
 flex-direction: column;
-gap: 3rem;
+gap: 2rem;
 h3{
     margin: 0;
     font-size: 2.4rem;
