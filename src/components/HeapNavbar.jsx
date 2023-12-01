@@ -71,6 +71,7 @@ padding: 0.8rem;
 display: flex;
 flex-direction: column;
 gap: 2rem;
+position: relative;
 h3{
     margin: 0;
     font-size: 2.4rem;
@@ -142,6 +143,8 @@ select{
         max-width: 200px;
         text-align: center;
         margin: 0 auto;
+        position: absolute;
+        top: 23px;
     }
     `
 

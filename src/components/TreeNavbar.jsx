@@ -140,7 +140,7 @@ const Wrapper=styled.div`
   }
   .back{
     position: absolute;
-    top: -14px;
+    top: -10px;
     left: 5px;
   }
 `
