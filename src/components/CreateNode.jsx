@@ -109,7 +109,8 @@ const CreateNode = ({node,setTree,setChange,change,setRotating,setAnimating,auto
             for(let i=0;i<divs.length;i++){
                 divs[i].classList.remove("hide");
             }
-            setAnimating({action:"",currNode:{}})
+            setAnimating({action:"",currNode:{}});
+            
             setTimeout(()=>{
                 animate(swaps);
             },500)
@@ -120,7 +121,7 @@ const CreateNode = ({node,setTree,setChange,change,setRotating,setAnimating,auto
     const animateDeleteion=(swps,temp)=>{
         setAnimating({action:"",currNode:{}})
         if(swps.length<1){
-            if(autoBalance){
+                    if(autoBalance){
                 let tree_1=JSON.parse(JSON.stringify(node));
                 balanceTree(tree_1,setAnimating,swaps);
                 animate(swaps);
