@@ -106,7 +106,9 @@ const TreeVisualizer = () => {
     revertChnages(array)
   }
   useEffect(()=>{
+    if(document.getElementById('answer') ){
       document.getElementById('answer').innerHTML="";
+    }
    },[tree])
   return (
     <main>
