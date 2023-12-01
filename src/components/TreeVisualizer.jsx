@@ -15,7 +15,6 @@ const TreeVisualizer = () => {
   const [rotatingTree,setRotating]=useState({type:"",tree:null});
   const [context,setContext]=useState(null)
   const [swaps,setSwaps]=useState([]);
-  const [ids,setIDs]=useState([]);
 
   const [animating,setAnimating]=useState({action:"",currNode:""})
   const [autoBalance,setAutoBalance]=useState(true)
@@ -74,11 +73,11 @@ const TreeVisualizer = () => {
   
       }
     },[animating])
-  const animateTraversals=(arr)=>{
+  const animateTraversals=(arr,ids)=>{
     if(arr.length<1){
       setTimeout(()=>{
         revertChnages(ids);
-      },500)
+      },400)
       return;
     }
     const {id,value}=arr.shift();
@@ -92,19 +91,23 @@ const TreeVisualizer = () => {
     setTimeout(()=>{
       elem.style.backgroundColor="green";
       elem.style.color="white";
-      animateTraversals(arr);
-    },500)
+      animateTraversals(arr,ids);
+    },400)
   }
   const revertChnages=(array)=>{
     if(array.length<1){
       return;
     }
+    console.log(array);
     const {id}=array.shift();
     const elem=document.getElementById(id);
     elem.style.backgroundColor="var(--green-light)";
     elem.style.color="black";
     revertChnages(array)
   }
+  useEffect(()=>{
+      document.getElementById('answer').innerHTML="";
+   },[tree])
   return (
     <main>
       <TreeNavbar setAutoBalance={setAutoBalance} setTree={setTree}/>
@@ -127,35 +130,35 @@ const TreeVisualizer = () => {
           <button className="btn btn-hipster btn-block" onClick={()=>{
             let arr=[];
             
-            inOrderTraversal(tree.root,arr);
-            setIDs(JSON.parse(JSON.stringify(arr)));
             document.getElementById('answer').innerHTML="";
-            animateTraversals(arr);
+            inOrderTraversal(tree.root,arr);
+            let ids=JSON.parse(JSON.stringify(arr));
+            animateTraversals(arr,ids);
           }}>Inorder</button>
           <button className="btn btn-hipster btn-block" onClick={()=>{
           let arr=[];
           
-          preOrderTraversal(tree.root,arr);
-          setIDs(JSON.parse(JSON.stringify(arr)));
           document.getElementById('answer').innerHTML="";
-          animateTraversals(arr);
+          preOrderTraversal(tree.root,arr);
+            let ids=JSON.parse(JSON.stringify(arr));
+            animateTraversals(arr,ids);
 
           }}>PreOrder</button>
           <button className="btn btn-hipster btn-block" onClick={()=>{
           let arr=[];
           
-          postOrderTraversal(tree.root,arr);
-          setIDs(JSON.parse(JSON.stringify(arr)));
           document.getElementById('answer').innerHTML="";
-          animateTraversals(arr);
+          postOrderTraversal(tree.root,arr);
+            let ids=JSON.parse(JSON.stringify(arr));
+            animateTraversals(arr,ids);
           }}>PostOrder</button>
           <button className="btn btn-hipster btn-block" onClick={()=>{
             let arr=[];
             
-            BFS(tree.root,arr);
-            setIDs(JSON.parse(JSON.stringify(arr)));
             document.getElementById('answer').innerHTML="";
-            animateTraversals(arr);
+            BFS(tree.root,arr);
+            let ids=JSON.parse(JSON.stringify(arr));
+            animateTraversals(arr,ids);
           }}>BFS</button>
         </div>
         }
@@ -189,10 +192,7 @@ const Wrapper=styled.div`
     height: 100vh;
   }
   #answer{
-    position: absolute;
-    bottom: 30px;
     color: white;
-    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -252,15 +252,11 @@ const Wrapper=styled.div`
   }
   .display-container{
     padding: 3rem;
-    margin:0 auto;
+    /* margin:0 auto; */
     position: relative;
     min-width: 100%;
     min-height: 90vh;
-    height: auto;
     background: var(--grey-900);
-
-    
-
   }
   .animating-section{
     position: absolute;
