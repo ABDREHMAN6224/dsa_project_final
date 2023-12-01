@@ -10,8 +10,6 @@ import Heap from './components/Heap';
 import { useGlobalContext } from './context/context';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Home from './components/Home';
-import LinkedLists from './components/LinkedLists';
-import LinkedLists2 from './components/LinkedLists2';
 
 const App = () => {
   const {using3d}=useGlobalContext();
@@ -28,10 +26,6 @@ const App = () => {
         {
           path:"/heap",
           element:<Heap/>
-        },
-        {
-          path:"/linkedList",
-          element:<LinkedLists/>
         },
         {
           path:"/sorting",

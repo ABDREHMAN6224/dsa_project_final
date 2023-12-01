@@ -22,8 +22,6 @@ export const insertValue = async (node, val, setAnimating) => {
 
     return node
 }
-
-
 export const balanceTree = (node, setAnimating, swaps) => {
     if (node === null) {
         return null
@@ -33,15 +31,6 @@ export const balanceTree = (node, setAnimating, swaps) => {
     node.height = Math.max(node.left ? node.left.height : -1, node.right ? node.right.height : -1) + 1;
     return rotate(node, setAnimating, swaps);
 }
-// export const balanceTree = async (node, setAnimating, swaps) => {
-//     if (node === null) {
-//         return null
-//     }
-//     node.left = await balanceTree(node.left, setAnimating)
-//     node.right = await balanceTree(node.right, setAnimating)
-//     node.height = Math.max(node.left ? node.left.height : -1, node.right ? node.right.height : -1) + 1
-//     return await rotate(node, setAnimating, swaps)
-// }
 const rotate = (node, setAnimating, swaps) => {
     setAnimating({ action: "compare", currNode: node })
     if (((node.left ? node.left.height : -1) - (node.right ? node.right.height : -1)) > 1) {
@@ -117,58 +106,8 @@ const rotate2 = (node) => {
             return n
         }
     }
-    // await sleep(time1)
     return node
 }
-// const rotate = async (node, setAnimating, swaps) => {
-//     setAnimating({ action: "compare", currNode: node })
-//     if (((node.left ? node.left.height : -1) - (node.right ? node.right.height : -1)) > 1) {
-//         setAnimating({ action: "rotating", currNode: node })
-//         if (((node.left.left ? node.left.left.height : -1) - (node.left.right ? node.left.right.height : -1)) > 0) {
-
-//             animate({ action: "right_rotate", p: node, c: node.left })
-//             await sleep(time1)
-//             const n = rightRotate(node)
-//             return n
-//         }
-//         if (((node.left.left ? node.left.left.height : -1) - (node.left.right ? node.left.right.height : -1)) < 0) {
-
-
-//             animate({ action: "left_rotate", p: node.left, c: node.left.right })
-//             await sleep(time1)
-//             const n1 = leftRotate(node.left);
-//             node.left = n1
-//             animate({ action: "right_rotate", p: node, c: node.left })
-//             await sleep(time1)
-//             const n = rightRotate(node);
-//             return n
-
-//         }
-//     }
-//     if (((node.left ? node.left.height : -1) - (node.right ? node.right.height : -1)) < -1) {
-//         setAnimating({ action: "rotating", currNode: node })
-
-//         if (((node.right.right ? node.right.right.height : -1) - (node.right.left ? node.right.left.height : -1)) > 0) {
-//             animate({ action: "left_rotate", p: node, c: node.right })
-//             await sleep(time1)
-//             const n = leftRotate(node)
-//             return n;
-//         }
-//         if (((node.right.right ? node.right.right.height : -1) - (node.right.left ? node.right.left.height : -1)) < 0) {
-
-//             animate({ action: "right_rotate", p: node.right, c: node.right.left })
-//             await sleep(time1)
-//             const n1 = rightRotate(node.right);
-//             node.right = n1
-//             animate({ action: "left_rotate", p: node, c: node.right })
-//             await sleep(time1)
-//             const n = leftRotate(node);
-//             return n
-//         }
-//     }
-//     // await sleep(time1)
-//     return node
-// }
 export const leftRotate = (node) => {
     const p = node;
     const c = p.right;
@@ -322,5 +261,43 @@ const deleteNode = (node, swaps) => {
         node.value = predecessor.value;
         node.left = deleteVal(node.left, node.value, swaps);
         return node;
+    }
+}
+
+export const inOrderTraversal = (node, traversal) => {
+    if (node === null) {
+        return;
+    }
+    inOrderTraversal(node.left, traversal);
+    traversal.push(node.id);
+    inOrderTraversal(node.right, traversal);
+}
+export const postOrderTraversal = (node, traversal) => {
+    if (node === null) {
+        return;
+    }
+    postOrderTraversal(node.left, traversal);
+    postOrderTraversal(node.right, traversal);
+    traversal.push(node.id);
+}
+export const preOrderTraversal = (node, traversal) => {
+    if (node === null) {
+        return;
+    }
+    traversal.push(node.id);
+    preOrderTraversal(node.left, traversal);
+    preOrderTraversal(node.right, traversal);
+}
+export const BFS = (node, traversal) => {
+    const deque = [node];
+    while (deque.length > 0) {
+        const current = deque.shift();
+        traversal.push(current.id);
+        if (current?.left !== null) {
+            deque.push(current?.left);
+        }
+        if (current?.right !== null) {
+            deque.push(current?.right);
+        }
     }
 }

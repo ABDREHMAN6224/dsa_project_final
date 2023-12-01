@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import CreateNode from './CreateNode';
 import styled from 'styled-components';
-import { balanceTree, deleteVal, searchValue } from '../utils/trees/BinaryTree';
+import { BFS, balanceTree, deleteVal, inOrderTraversal, postOrderTraversal, preOrderTraversal, searchValue } from '../utils/trees/BinaryTree';
 import TreeNavbar from './TreeNavbar';
 import { v4 as uuid } from 'uuid';
 import { useTreeContext } from '../context/TreeContext';
@@ -12,12 +12,10 @@ const TreeVisualizer = () => {
   const [search,setSearch] =useState('');
   const [change,setChange]=useState(false) 
   const [render, setRender] = useState(false);
-  const [value, setValue] = useState('');
   const [rotatingTree,setRotating]=useState({type:"",tree:null});
   const [context,setContext]=useState(null)
-  const [swaps,setSwaps]=useState([])
-  const [val,setVal]=useState("");
-
+  const [swaps,setSwaps]=useState([]);
+  const [ids,setIDs]=useState([]);
 
   const [animating,setAnimating]=useState({action:"",currNode:""})
   const [autoBalance,setAutoBalance]=useState(true)
@@ -60,16 +58,6 @@ const TreeVisualizer = () => {
     setRender(true)
   }
   
-  const handleBalanace=()=>{
-    const animate=async ()=>{
-      const root=await balanceTree(tree.root,setAnimating,swaps)
-      setTree({root:root})
-      setAnimating({action:"",currNode:""})
-    }
-    animate()
-    
-    
-  }
   const handleSearch=(e)=>{
     e.preventDefault()
     const animate=async ()=>{
@@ -86,7 +74,32 @@ const TreeVisualizer = () => {
   
       }
     },[animating])
-  
+  const animateTraversals=(arr)=>{
+    if(arr.length<1){
+      setTimeout(()=>{
+        revertChnages(ids);
+      },500)
+      return;
+    }
+    const id=arr.shift();
+    const elem=document.getElementById(id);
+    elem.style.backgroundColor="var(--red-dark)";
+    setTimeout(()=>{
+      elem.style.backgroundColor="green";
+      elem.style.color="white";
+      animateTraversals(arr);
+    },500)
+  }
+  const revertChnages=(array)=>{
+    if(array.length<1){
+      return;
+    }
+    const id=array.shift();
+    const elem=document.getElementById(id);
+    elem.style.backgroundColor="var(--green-light)";
+    elem.style.color="black";
+    revertChnages(array)
+  }
   return (
     <main>
       <TreeNavbar setAutoBalance={setAutoBalance} setTree={setTree}/>
@@ -103,6 +116,35 @@ const TreeVisualizer = () => {
             </div>
           <button type="submit" className='btn btn-danger' onClick={handleSearch} >Enter</button>
         </form>
+        }
+        {render &&
+        <div className="controls">
+          <button className="btn btn-hipster btn-block" onClick={()=>{
+            let arr=[];
+            inOrderTraversal(tree.root,arr);
+            setIDs(JSON.parse(JSON.stringify(arr)));
+            animateTraversals(arr);
+          }}>Inorder</button>
+          <button className="btn btn-hipster btn-block" onClick={()=>{
+          let arr=[];
+          preOrderTraversal(tree.root,arr);
+          setIDs(JSON.parse(JSON.stringify(arr)));
+          animateTraversals(arr);
+
+          }}>PreOrder</button>
+          <button className="btn btn-hipster btn-block" onClick={()=>{
+          let arr=[];
+          postOrderTraversal(tree.root,arr);
+          setIDs(JSON.parse(JSON.stringify(arr)));
+          animateTraversals(arr);
+          }}>PostOrder</button>
+          <button className="btn btn-hipster btn-block" onClick={()=>{
+            let arr=[];
+            BFS(tree.root,arr);
+            setIDs(JSON.parse(JSON.stringify(arr)));
+            animateTraversals(arr);
+          }}>BFS</button>
+        </div>
         }
         
       </div>
@@ -328,5 +370,10 @@ const Wrapper=styled.div`
   }
   ::-webkit-scrollbar{
     display: none;
+  }
+  .controls{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 `
