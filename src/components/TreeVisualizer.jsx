@@ -199,6 +199,8 @@ const Wrapper=styled.div`
     gap: 3rem;
     font-size: 2.3rem;
     font-weight: 900;
+    max-width: 90vw;
+    flex-wrap: wrap;
   }
   .no-match{
     background-color: red!important;
