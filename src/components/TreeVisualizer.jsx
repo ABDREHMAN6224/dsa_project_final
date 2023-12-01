@@ -81,9 +81,14 @@ const TreeVisualizer = () => {
       },500)
       return;
     }
-    const id=arr.shift();
+    const {id,value}=arr.shift();
+    
     const elem=document.getElementById(id);
     elem.style.backgroundColor="var(--red-dark)";
+    const temp=document.createElement('h3');
+    document.getElementById('answer').appendChild(temp);
+    temp.innerHTML=value;
+
     setTimeout(()=>{
       elem.style.backgroundColor="green";
       elem.style.color="white";
@@ -94,7 +99,7 @@ const TreeVisualizer = () => {
     if(array.length<1){
       return;
     }
-    const id=array.shift();
+    const {id}=array.shift();
     const elem=document.getElementById(id);
     elem.style.backgroundColor="var(--green-light)";
     elem.style.color="black";
@@ -121,39 +126,48 @@ const TreeVisualizer = () => {
         <div className="controls">
           <button className="btn btn-hipster btn-block" onClick={()=>{
             let arr=[];
+            
             inOrderTraversal(tree.root,arr);
             setIDs(JSON.parse(JSON.stringify(arr)));
+            document.getElementById('answer').innerHTML="";
             animateTraversals(arr);
           }}>Inorder</button>
           <button className="btn btn-hipster btn-block" onClick={()=>{
           let arr=[];
+          
           preOrderTraversal(tree.root,arr);
           setIDs(JSON.parse(JSON.stringify(arr)));
+          document.getElementById('answer').innerHTML="";
           animateTraversals(arr);
 
           }}>PreOrder</button>
           <button className="btn btn-hipster btn-block" onClick={()=>{
           let arr=[];
+          
           postOrderTraversal(tree.root,arr);
           setIDs(JSON.parse(JSON.stringify(arr)));
+          document.getElementById('answer').innerHTML="";
           animateTraversals(arr);
           }}>PostOrder</button>
           <button className="btn btn-hipster btn-block" onClick={()=>{
             let arr=[];
+            
             BFS(tree.root,arr);
             setIDs(JSON.parse(JSON.stringify(arr)));
+            document.getElementById('answer').innerHTML="";
             animateTraversals(arr);
           }}>BFS</button>
         </div>
         }
         
       </div>
-      <div className="display-container">
+      <div className="display-container" >
       {tree.root &&
         <div className="binary-tree preorde inorde postorde">
           {display(tree.root)}
         </div>
       }
+      <div id="answer"></div>
       </div>
    </Wrapper>
    }
@@ -171,6 +185,21 @@ const Wrapper=styled.div`
   max-height: 92vh;
   min-height: 92vh;
   overflow: hidden;
+  .display-container{
+    height: 100vh;
+  }
+  #answer{
+    position: absolute;
+    bottom: 30px;
+    color: white;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    font-size: 2.3rem;
+    font-weight: 900;
+  }
   .no-match{
     background-color: red!important;
     scale: 1.4;
@@ -227,6 +256,7 @@ const Wrapper=styled.div`
     min-height: 90vh;
     height: auto;
     background: var(--grey-900);
+
     
 
   }

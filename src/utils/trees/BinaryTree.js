@@ -269,7 +269,7 @@ export const inOrderTraversal = (node, traversal) => {
         return;
     }
     inOrderTraversal(node.left, traversal);
-    traversal.push(node.id);
+    traversal.push({ value: node.value, id: node.id });
     inOrderTraversal(node.right, traversal);
 }
 export const postOrderTraversal = (node, traversal) => {
@@ -278,13 +278,13 @@ export const postOrderTraversal = (node, traversal) => {
     }
     postOrderTraversal(node.left, traversal);
     postOrderTraversal(node.right, traversal);
-    traversal.push(node.id);
+    traversal.push({ value: node.value, id: node.id });
 }
 export const preOrderTraversal = (node, traversal) => {
     if (node === null) {
         return;
     }
-    traversal.push(node.id);
+    traversal.push({ value: node.value, id: node.id });
     preOrderTraversal(node.left, traversal);
     preOrderTraversal(node.right, traversal);
 }
@@ -292,7 +292,7 @@ export const BFS = (node, traversal) => {
     const deque = [node];
     while (deque.length > 0) {
         const current = deque.shift();
-        traversal.push(current.id);
+        traversal.push({ value: current.value, id: current.id });
         if (current?.left !== null) {
             deque.push(current?.left);
         }
