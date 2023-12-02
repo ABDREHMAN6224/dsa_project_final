@@ -198,7 +198,8 @@ const Wrapper=styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 3rem;
+    padding: 1rem;
+    gap: 1.8rem;
     font-size: 2.3rem;
     font-weight: 900;
     max-width: 90vw;
@@ -258,7 +259,7 @@ const Wrapper=styled.div`
     align-items: center;
   }
   .display-container{
-    padding: 3rem;
+    padding: 1rem;
     /* margin:0 auto; */
     position: relative;
     min-width: 100%;
