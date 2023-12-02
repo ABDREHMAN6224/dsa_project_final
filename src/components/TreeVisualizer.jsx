@@ -203,6 +203,11 @@ const Wrapper=styled.div`
     font-weight: 900;
     max-width: 90vw;
     flex-wrap: wrap;
+    h3{
+      margin: 0;
+      padding: 0;
+    
+    }
   }
   .no-match{
     background-color: red!important;
