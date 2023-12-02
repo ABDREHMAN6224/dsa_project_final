@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useGlobalContext } from '../context/context'
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
-    const {using3d,setusing3d,size,setSize,setMoves,setTime,time,setPivot,setSorted,setBack,setportion,insertionSortAnimate,heapSortAnimate,shuffle,bubbleSortAnimate,mergeSortAnimate,selectionSortAnimate,quickSortAnimate}=useGlobalContext()
+    const {setIsSorting,isSorting,using3d,endIt,setEndIt,setusing3d,size,setSize,setMoves,setTime,time,setPivot,setSorted,setBack,setportion,insertionSortAnimate,heapSortAnimate,shuffle,bubbleSortAnimate,mergeSortAnimate,selectionSortAnimate,quickSortAnimate}=useGlobalContext()
     
     const handleShuffle=()=>{
       setportion(null);
@@ -61,26 +61,28 @@ const Navbar = () => {
         <h6>Size Of Arr</h6>
         <input type="range" name="size" id="" min={5} max={150} step={5} value={size} onChange={(e)=>{
           setSize(Number(e.target.value))}
-        }/>
+        } disabled={isSorting}/>
         </div>
         <div className="row">
         <h6>Speed (max:min)</h6>
         <input type="range" name="size" id="" min={5} max={500} step={5} value={time} onChange={(e)=>{
           setTime(Number(e.target.value))}
-        }/>
+        } disabled={isSorting}/>
         </div>
-        <button type='button' onClick={handleShuffle} className='btn btn-primary'>Shuffle Array</button>
+        <button type='button' onClick={handleShuffle} className='btn btn-primary' disabled={isSorting}>Shuffle Array</button>
         </div>
             <div className="sorts">
 
-        <button type='button' onClick={handleBubble} className='btn btn-hipster'>BubbleSort</button>
-        <button type='button' onClick={handleSelection} className='btn btn-hipster'>selectionSort</button>
-        <button type='button' onClick={handleMerge} className='btn btn-hipster'>mergeSort</button>
-        <button type='button' onClick={handleQuick} className='btn btn-hipster'>quickSort</button>
-        <button type='button' onClick={handleInsertion} className='btn btn-hipster'>insertionSort</button>
-        <button type='button' onClick={handleHeap} className='btn btn-hipster'>heapSort</button>
+        <button type='button' onClick={handleBubble} className='btn btn-hipster' disabled={isSorting}>BubbleSort</button>
+        <button type='button' onClick={handleSelection} className='btn btn-hipster' disabled={isSorting}>selectionSort</button>
+        <button type='button' onClick={handleMerge} className='btn btn-hipster' disabled={isSorting}>mergeSort</button>
+        <button type='button' onClick={handleQuick} className='btn btn-hipster' disabled={isSorting}>quickSort</button>
+        <button type='button' onClick={handleInsertion} className='btn btn-hipster' disabled={isSorting}>insertionSort</button>
+        <button type='button' onClick={handleHeap} className='btn btn-hipster' disabled={isSorting}>heapSort</button>
             </div>
-        <button type='button' onClick={()=>setusing3d(!using3d)} className='btn btn-primary'>{using3d?"toggle to 2d":"toggleTo3d"}</button>
+            <div >
+        <button type='button' onClick={()=>setusing3d(!using3d)} className='btn btn-primary' disabled={isSorting}>{using3d?"toggle to 2d":"toggleTo3d"}</button>
+            </div>
     </Wrapper>
   )
 }

@@ -19,6 +19,8 @@ const AppProvider=({children})=>{
     const [currentSort,setCurrentSort]=useState("bubble");
     let [noOfSwaps,setNoOfSwaps]=useState(0);
     let [noOfComps,setNoOfComps]=useState(0);
+    const [isSorting,setIsSorting]=useState(false);
+    const [endIt,setEndIt]=useState(false);
     
 
 
@@ -30,6 +32,7 @@ const AppProvider=({children})=>{
         setJmp([])
         setportion(null);
         setPivot(null); 
+        setIsSorting(true);
         const tempArray=[...array]
         const swaps= mergeSort(tempArray,0,array.length-1);
         setCurrentSort("merge");
@@ -46,6 +49,7 @@ const AppProvider=({children})=>{
         setMove({})
         setJmp([])
         setPivot(null);
+        setIsSorting(true);
         setportion(null);
         const tempArray=[...array]
         setCurrentSort("heap");
@@ -63,6 +67,7 @@ const AppProvider=({children})=>{
         setJmp([])
         setPivot(null);
         setportion(null);
+        setIsSorting(true);
         setCurrentSort("bubble")
         const tempArray=[...array]
         if(!using3d){
@@ -79,6 +84,7 @@ const AppProvider=({children})=>{
         setMove({})
         setJmp([])
         setPivot(null);
+        setIsSorting(true);
         setportion(null);
         const tempArray=[...array]
         if(!using3d){
@@ -97,6 +103,7 @@ const AppProvider=({children})=>{
         setPivot(null);
         setCurrentSort("quick");
         const tempArray=[...array]
+        setIsSorting(true);
         const swaps= quickSort(tempArray,0,array.length-1);
         if(!using3d){
 
@@ -112,6 +119,7 @@ const AppProvider=({children})=>{
         setJmp([])
         setportion(null);
         setPivot(null);
+        setIsSorting(true);
         setCurrentSort("insertion");
         const tempArray=[...array]
         const swaps= insertionSort(tempArray);
@@ -122,8 +130,12 @@ const AppProvider=({children})=>{
         return swaps
 
     }
+    
+    useEffect(() => {
+    }, [endIt])
     const animate=(swaps)=>{
-        if(swaps?.length<1){
+        if(swaps?.length<1 ){
+            setIsSorting(false);
             return;
         }
         const currMove=swaps.shift();
@@ -157,7 +169,10 @@ const AppProvider=({children})=>{
             setPivot(currMove.value)
         }
         setTimeout(()=>{
-            animate(swaps);
+            
+                animate(swaps);
+            
+            
         },time)
 
     }
@@ -167,7 +182,7 @@ const AppProvider=({children})=>{
     useEffect(()=>{
         setArray(generateArray(size))
     },[size])
-    return <AppContext.Provider value={{sorted,noOfComps,setNoOfComps,setNoOfSwaps,noOfSwaps,using3d,currentSort,setusing3d,setMoves,setArray,jmp,sorted,moves,setSorted,insertionSortAnimate,array,setSize,setTime,time,size,pivot,heapSortAnimate,shuffle,animate,portion,move,bubbleSortAnimate,quickSortAnimate,setBack,back,selectionSortAnimate,mergeSortAnimate,setPivot,setportion}}>
+    return <AppContext.Provider value={{sorted,noOfComps,setEndIt,setIsSorting,isSorting,setNoOfComps,setNoOfSwaps,noOfSwaps,using3d,currentSort,setusing3d,setMoves,setArray,jmp,sorted,moves,setSorted,insertionSortAnimate,array,setSize,setTime,time,size,pivot,heapSortAnimate,shuffle,animate,portion,move,bubbleSortAnimate,quickSortAnimate,setBack,back,selectionSortAnimate,mergeSortAnimate,setPivot,setportion}}>
         {children}
     </AppContext.Provider>
 }
