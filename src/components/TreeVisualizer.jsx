@@ -17,20 +17,25 @@ const TreeVisualizer = () => {
   const [swaps,setSwaps]=useState([]);
 
   const [animating,setAnimating]=useState({action:"",currNode:""})
-  const [autoBalance,setAutoBalance]=useState(true)
+  const [autoBalance,setAutoBalance]=useState(true);
+  const [isRedBlack,setIsRedBlack]=useState(false);
   const {selected}=useTreeContext();
   
   const display= (root)=>{
     if(root!==null){
-      return (<div >
+      if(isRedBlack){
+
+      }else{
+
+        return (<div >
         {
           animating.action==="compare" && animating.currNode==root?
-         <span id={root.id}  style={{backgroundColor:"var(--red-dark)",color:"white"}}>{root.value}
-          <div className='before' ></div>
+         <span id={root.id}  style={{backgroundColor:"var(--primary-600)",color:"white"}}>{root.value}
+          <div className='before ' ></div>
           <p>{root.height}</p>
           </span>:
           animating.action==="rotating" && animating.currNode==root?
-         <span id={root.id}  style={{backgroundColor:"var(--primary-600)",color:"white"}}>{root.value}
+         <span id={root.id}  style={{backgroundColor:"var(--green-dark)",color:"white"}}>{root.value}
             <div className='before'></div>
           <p>{root.height}</p>
           </span>:animating.action==="found" && animating.currNode==root?<span id={root.id}  className='found' style={{backgroundColor:"yellow"}}>{root.value}
@@ -51,6 +56,7 @@ const TreeVisualizer = () => {
                 {root.right?display(root.right):<div></div>}
           </div>)}
       
+    }
     
   }
   const handleSubmit=(e)=>{
@@ -116,7 +122,7 @@ const TreeVisualizer = () => {
       {selected=="Segment Tree"?<SegmentTree/> :
     <Wrapper>
       <div className="nodes">
-        <CreateNode swaps={swaps} node={tree.root} ctx={context} change={change} setChange={setChange} setTree={setTree} setRotating={setRotating}  setAnimating={setAnimating} autoBalance={autoBalance} handleSubmit={handleSubmit}/>
+        <CreateNode swaps={swaps} node={tree.root} ctx={context} change={change} setChange={setChange} setTree={setTree} setRotating={setRotating}  setAnimating={setAnimating} autoBalance={autoBalance} handleSubmit={handleSubmit} isRedBlack={isRedBlack}/>
             {render && 
         <form className='form' >
           <div className="form-row">

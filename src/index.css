@@ -45,7 +45,7 @@ html {
     --red-light: #f8d7da;
     --red-dark: #842029;
     --green-light: #d1e7dd;
-    --green-dark: #0f5132;
+    --green-dark: #1ba565;
     /* fonts  */
     --headingFont: 'Roboto Condensed', Sans-Serif;
     --bodyFont: 'Cabin', Sans-Serif;
@@ -269,7 +269,7 @@ ul {
 
 .form-select {
     background: var(--clr-grey-100);
-    /* border-radius: var(--radius); */
+    border-radius: var(--radius);
     border-color: transparent;
     padding: 0.25rem;
 }

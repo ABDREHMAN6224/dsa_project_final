@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import { balanceIL, balanceIR, balancePartciularNode, balanceTree, deleteVal, insertValue, insertValue2, leftRotate, rightRotate } from '../utils/trees/BinaryTree'
 import { sleep } from '../utils/sorting'
 import { getSuccessiveNodes, getXYDifference } from '../utils/utils'
+import { checkViolation, insertValueInRedBlackTree } from '../utils/trees/RedBlackTree'
 
-const CreateNode = ({node,setTree,setChange,change,setRotating,setAnimating,autoBalance,ctx,swaps,handleSubmit:handle}) => {
+const CreateNode = ({node,setTree,isRedBlack,setChange,change,setRotating,setAnimating,autoBalance,ctx,swaps,handleSubmit:handle}) => {
     const [display,setDisplay]=useState(true)
     const [val,setVal]=useState('')
     const [val1,setVal1]=useState('')
@@ -13,7 +14,7 @@ const CreateNode = ({node,setTree,setChange,change,setRotating,setAnimating,auto
     duration: 1000,
     };
     const findPC=(node,p)=>{
-        if(node==null){return null;}
+        if(!node){return null;}
         if(node.id==p.id){
             return node;
         }
@@ -189,16 +190,24 @@ const CreateNode = ({node,setTree,setChange,change,setRotating,setAnimating,auto
             e.preventDefault();
             if(val!==null){
                 const data=async ()=>{
-                    let d=await insertValue(node,Number(val),setAnimating)
-                    setTree({root:d})
-                    setAnimating({action:"",currNode:{}})
-                    if(autoBalance){
-                        let tree=JSON.parse(JSON.stringify(node));
-                        balanceTree(tree,setAnimating,swaps);
-                        await sleep(500);
-                        animate(swaps);
+                    
+                    if(!isRedBlack){                        
+                        let d=await insertValueInRedBlackTree(node,node,null,Number(val),setAnimating);
+                        setTree({root:d});
+                    }else{
+
+                        let d=await insertValue(node,Number(val),setAnimating)
+                        setTree({root:d})
+                        setAnimating({action:"",currNode:{}})
+                        if(autoBalance){
+                            let tree=JSON.parse(JSON.stringify(node));
+                            balanceTree(tree,setAnimating,swaps);
+                            await sleep(500);
+                            animate(swaps);
+                        }
                     }
-                }
+                
+            }
                 data()
                 setVal('');
                 setChange(!change)

@@ -16,6 +16,7 @@ const Navbar = () => {
     const handleBubble=()=>{
      const moves=bubbleSortAnimate();
      if(using3d){
+      setIsSorting(false);
        setMoves(moves);
      }
     }
@@ -23,12 +24,14 @@ const Navbar = () => {
       const moves =selectionSortAnimate();
       // setMoves(moves);
       if(using3d){
+        setIsSorting(false);
         setMoves(moves);
       }
     }
     const handleMerge=()=>{
       const moves =mergeSortAnimate();
       if(using3d){
+        setIsSorting(false);
         setMoves(moves);
       }
       // setMoves(moves);
@@ -36,6 +39,7 @@ const Navbar = () => {
     const handleQuick=()=>{
       const moves =quickSortAnimate();
       if(using3d){
+        setIsSorting(false);
         setMoves(moves);
       }
       // setMoves(moves);
@@ -43,6 +47,7 @@ const Navbar = () => {
     const handleInsertion=()=>{
       const moves =insertionSortAnimate();
       if(using3d){
+        setIsSorting(false);
         setMoves(moves);
       }
       // setMoves(moves);
@@ -50,6 +55,7 @@ const Navbar = () => {
     const handleHeap=()=>{
       const moves =heapSortAnimate();
       if(using3d){
+        setIsSorting(false);
         setMoves(moves);
       }
     }

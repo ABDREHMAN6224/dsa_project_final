@@ -7,7 +7,6 @@ export const insertValue = async (node, val, setAnimating) => {
         node = { value: val, left: null, right: null, height: 0, id: "n_" + uuid() }
         return node
     }
-
     if (val < node.value) {
         setAnimating({ action: "compare", currNode: node })
         await sleep(time)
@@ -95,7 +94,7 @@ const rotate2 = (node) => {
     if (((node.left ? node.left.height : -1) - (node.right ? node.right.height : -1)) < -1) {
 
         if (((node.right.right ? node.right.right.height : -1) - (node.right.left ? node.right.left.height : -1)) >= 0) {
-            const n = leftRotate(node)
+            const n = leftRotate(node);
             return n;
         }
         if (((node.right.right ? node.right.right.height : -1) - (node.right.left ? node.right.left.height : -1)) < 0) {

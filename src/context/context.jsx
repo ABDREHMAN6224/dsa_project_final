@@ -23,7 +23,11 @@ const AppProvider=({children})=>{
     const [endIt,setEndIt]=useState(false);
     
 
-
+    useEffect(()=>{
+        if(using3d){
+            setIsSorting(false);
+        }
+    },[using3d])
 
     const mergeSortAnimate=()=>{
         setNoOfComps(0);

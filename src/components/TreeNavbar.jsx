@@ -5,7 +5,7 @@ import { treeAnalysis, treeCodes } from '../utils/analysis';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
-const trees=["Segment Tree","Binary Search Tree","AVL Tree"];
+const trees=["Segment Tree","Binary Search Tree","AVL Tree","Red Black Tree"];
 const TreeNavbar = ({setAutoBalance,setTree}) => {
   const {selected,setSelected,setOpenInfo,openInfo}=useTreeContext();
   const handleClick=(t)=>{
