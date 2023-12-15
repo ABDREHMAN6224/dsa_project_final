@@ -5,7 +5,7 @@ import { sleep } from '../utils/sorting'
 import { getSuccessiveNodes, getXYDifference } from '../utils/utils'
 import { checkViolation, insertValueInRedBlackTree } from '../utils/trees/RedBlackTree'
 
-const CreateNode = ({node,setTree,isRedBlack,setChange,change,setRotating,setAnimating,autoBalance,ctx,swaps,handleSubmit:handle}) => {
+const CreateNode = ({node,setTree,setChange,change,setRotating,setAnimating,autoBalance,ctx,swaps,handleSubmit:handle}) => {
     const [display,setDisplay]=useState(true)
     const [val,setVal]=useState('')
     const [val1,setVal1]=useState('')
@@ -190,12 +190,6 @@ const CreateNode = ({node,setTree,isRedBlack,setChange,change,setRotating,setAni
             e.preventDefault();
             if(val!==null){
                 const data=async ()=>{
-                    
-                    if(!isRedBlack){                        
-                        let d=await insertValueInRedBlackTree(node,node,null,Number(val),setAnimating);
-                        setTree({root:d});
-                    }else{
-
                         let d=await insertValue(node,Number(val),setAnimating)
                         setTree({root:d})
                         setAnimating({action:"",currNode:{}})
@@ -205,7 +199,7 @@ const CreateNode = ({node,setTree,isRedBlack,setChange,change,setRotating,setAni
                             await sleep(500);
                             animate(swaps);
                         }
-                    }
+                    
                 
             }
                 data()

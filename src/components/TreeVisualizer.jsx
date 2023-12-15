@@ -18,7 +18,6 @@ const TreeVisualizer = () => {
 
   const [animating,setAnimating]=useState({action:"",currNode:""})
   const [autoBalance,setAutoBalance]=useState(true);
-  const [isRedBlack,setIsRedBlack]=useState(false);
   const {selected}=useTreeContext();
   
   const display= (root)=>{
@@ -122,7 +121,7 @@ const TreeVisualizer = () => {
       {selected=="Segment Tree"?<SegmentTree/> :
     <Wrapper>
       <div className="nodes">
-        <CreateNode swaps={swaps} node={tree.root} ctx={context} change={change} setChange={setChange} setTree={setTree} setRotating={setRotating}  setAnimating={setAnimating} autoBalance={autoBalance} handleSubmit={handleSubmit} isRedBlack={isRedBlack}/>
+        <CreateNode swaps={swaps} node={tree.root} ctx={context} change={change} setChange={setChange} setTree={setTree} setRotating={setRotating}  setAnimating={setAnimating} autoBalance={autoBalance} handleSubmit={handleSubmit}/>
             {render && 
         <form className='form' >
           <div className="form-row">
