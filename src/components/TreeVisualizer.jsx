@@ -22,9 +22,6 @@ const TreeVisualizer = () => {
   
   const display= (root)=>{
     if(root!==null){
-      if(isRedBlack){
-
-      }else{
 
         return (<div >
         {
@@ -57,7 +54,7 @@ const TreeVisualizer = () => {
       
     }
     
-  }
+  
   const handleSubmit=(e)=>{
     setRender(true)
   }
