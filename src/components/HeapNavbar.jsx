@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 const HeapNavbar = () => {
-    const {insertInArr,choice,setChoice,deleteFromArr}=useHeapContext();
+    const {insertInArr,choice,setChoice,deleteFromArr,setArr}=useHeapContext();
     const [val,setVal]=useState("");
     const handleSubmit=(e)=>{
         e.preventDefault();
@@ -33,6 +33,7 @@ const HeapNavbar = () => {
 
             <div className="form-row">
                 <select type="number" name="" required id="" className="form-input" value={choice} onChange={(e)=>{
+                    setArr([]);
                     setChoice(e.target.value);
                 }}>
                     <option value="min" className='opt' >Min Heap</option>

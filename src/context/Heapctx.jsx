@@ -136,7 +136,7 @@ const HeapProvider=({children})=>{
         },100)
     }
     return (
-        <heapContext.Provider value={{arr,heap,insertInArr,display,choice,setChoice,deleteFromArr}}>
+        <heapContext.Provider value={{arr,heap,insertInArr,display,choice,setChoice,deleteFromArr,setArr}}>
             {children}
         </heapContext.Provider>
     )
